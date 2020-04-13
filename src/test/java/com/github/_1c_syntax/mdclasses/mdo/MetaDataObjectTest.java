@@ -316,6 +316,7 @@ class MetaDataObjectTest {
     assertThat(mdo instanceof XDTOPackage).isTrue();
     assertThat(mdo.getName()).isEqualTo("ПакетXDTO1");
     assertThat(mdo.getUuid()).isEqualTo("b8a93cce-56e4-4507-b281-5c525a466a0f");
+
   }
 
   @Test
@@ -605,6 +606,7 @@ class MetaDataObjectTest {
     assertThat(mdo instanceof Language).isTrue();
     assertThat(mdo.getName()).isEqualTo("Русский");
     assertThat(mdo.getUuid()).isEqualTo("1b5f5cd6-14b2-422e-ab6c-1103fd375982");
+    assertThat(((Language) mdo).getLanguageCode()).isEqualTo("ru");
 
     mdo = MDOUtils.getMDObject(ConfigurationSource.DESIGNER, MDOType.INTERFACE, getMDOPathDesigner("Interfaces/Интерфейс1.xml"));
     assertThat(mdo).isNotNull();
@@ -623,7 +625,7 @@ class MetaDataObjectTest {
     allChildren = MDOUtils.getAllChildren(ConfigurationSource.DESIGNER,
       Paths.get(SRC_DESIGNER), true);
     assertThat(allChildren).isNotNull();
-    assertThat(allChildren).hasSize(54);
+    assertThat(allChildren).hasSize(56);
   }
 
   private Path getMDOPathEDT(String path) {

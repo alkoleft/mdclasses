@@ -22,13 +22,20 @@
 package com.github._1c_syntax.mdclasses.mdo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
+import com.github._1c_syntax.mdclasses.metadata.additional.ReturnValueReuse;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Map;
+
+import static com.github._1c_syntax.mdclasses.utils.MapExtension.getOrEmptyString;
+import static com.github._1c_syntax.mdclasses.utils.MapExtension.getOrFalse;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
@@ -36,6 +43,8 @@ import lombok.experimental.SuperBuilder;
 @JsonDeserialize(builder = Language.LanguageBuilderImpl.class)
 @SuperBuilder
 public class Language extends MDObjectBase {
+
+  String languageCode;
 
   @Override
   public MDOType getType() {
@@ -45,5 +54,14 @@ public class Language extends MDObjectBase {
   @JsonPOJOBuilder(withPrefix = "")
   @JsonIgnoreProperties(ignoreUnknown = true)
   static final class LanguageBuilderImpl extends Language.LanguageBuilder<Language, Language.LanguageBuilderImpl> {
+
+    @JsonProperty("Properties")
+    @Override
+    public Language.LanguageBuilderImpl properties(Map<String, Object> properties) {
+      super.properties(properties);
+      languageCode(getOrEmptyString(properties, "LanguageCode"));
+
+      return this.self();
+    }
   }
 }
