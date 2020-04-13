@@ -51,12 +51,14 @@
 		<Metadata name="CommonModule.ПростойОбщийМодуль.Module" id="1be4af7e-334e-49fa-a9f9-d80c737ff954.0" configVersion="f59d639294a8e74280e1d7f24bffd4ee00000000"/>
 		<Metadata name="CommonPicture.ОбщаяКартинка1" id="db84513d-2535-494b-843e-6d8931cb2f82" configVersion="2c45534222274f4d9f2e1b8f12806e4200000000"/>
 		<Metadata name="CommonTemplate.Макет" id="799e0ae7-f5ea-4b50-8853-e2c58ef5d9cd" configVersion="10e7e6d77d1ba941a1fe1f20fdd68bd500000000"/>
-		<Metadata name="Configuration.Конфигурация" id="46c7c1d0-b04d-4295-9b04-ae3207c18d29" configVersion="8fd8165af052ac4199bb7104e9b4b51700000000"/>
+		<Metadata name="Configuration.Конфигурация" id="46c7c1d0-b04d-4295-9b04-ae3207c18d29" configVersion="b370daa6c79feb45958b8bd9b822e7ee00000000"/>
 		<Metadata name="Configuration.Конфигурация.ExternalConnectionModule" id="6b9cfff9-b36e-4dc0-947d-9ae7d8eafbff.5" configVersion="6eac22d94615c24b964e1a888b32f4d000000000"/>
 		<Metadata name="Configuration.Конфигурация.ManagedApplicationModule" id="6b9cfff9-b36e-4dc0-947d-9ae7d8eafbff.6" configVersion="101a4046a20f4e4e8313bd53a740050800000000"/>
 		<Metadata name="Configuration.Конфигурация.SessionModule" id="6b9cfff9-b36e-4dc0-947d-9ae7d8eafbff.7" configVersion="89619538e2c72649a990992eb6eb21c900000000"/>
 		<Metadata name="Constant.Константа1" id="61e6a6f2-7057-4e93-96c3-7bd2559217f4" configVersion="7d10d7257a8abe41bd59b445746667ce00000000"/>
-		<Metadata name="DataProcessor.Обработка1" id="a7c57ba0-75d8-487d-b8ea-ae5083d8a503" configVersion="68c7448ec8673d49a144aad23015294100000000"/>
+		<Metadata name="DataProcessor.Обработка1" id="a7c57ba0-75d8-487d-b8ea-ae5083d8a503" configVersion="e677d628379d084fa9d9471dbf6f9bda00000000"/>
+		<Metadata name="DataProcessor.Обработка1.Form.Форма" id="11c4da72-4903-410c-b655-32e51a7a6b5b" configVersion="a1b160925363de48839a27d43bd507d100000000"/>
+		<Metadata name="DataProcessor.Обработка1.Form.Форма.Form" id="11c4da72-4903-410c-b655-32e51a7a6b5b.0" configVersion="006a6054c253b34bbeda4a020424887d00000000"/>
 		<Metadata name="DefinedType.ОпределяемыйТип1" id="e8c616d9-4957-48ab-a917-afb6847f6840" configVersion="811a645a1bfe2d4cbd48548030b6e34600000000"/>
 		<Metadata name="Document.Документ1" id="ce4fb46b-4af7-493e-9fcb-76ad8c4f8acd" configVersion="e641482aef18174aaa3a6bc67cfb5bd800000000">
 			<Metadata name="Document.Документ1.TabularSection.ТабличнаяЧасть1.Attribute.Реквизит2" id="22b9ca2e-c861-4f47-8377-cc364b9ebf5d"/>
@@ -107,7 +109,9 @@
 		</Metadata>
 		<Metadata name="Interface.Интерфейс1" id="874d641c-12f7-4db7-bde2-dd72c3d5b522" configVersion="16704f96804ba748aa68b924826f644600000000"/>
 		<Metadata name="Interface.Интерфейс1.Interface" id="874d641c-12f7-4db7-bde2-dd72c3d5b522.0" configVersion="b6e09b8cc7e7574ab36860fd1ad555e000000000"/>
-		<Metadata name="Language.Русский" id="1b5f5cd6-14b2-422e-ab6c-1103fd375982" configVersion="3e5a396bde9aee4a83af25b91e96c57700000000"/>
+		<Metadata name="Language.Английский" id="c9ef0609-7637-40c4-a90f-8077f34454aa" configVersion="f4c6a853163bd74780b9d2a7684a5f7c00000000"/>
+		<Metadata name="Language.Русский" id="1b5f5cd6-14b2-422e-ab6c-1103fd375982" configVersion="bd0a76cdc51d4646a979a5e8caadf5c500000000"/>
+		<Metadata name="Language.Японский" id="d88daef2-4fed-4677-8479-16ad8327af0c" configVersion="d2bc506bfdfaed4487a98d3438e281ee00000000"/>
 		<Metadata name="Report.Отчет1" id="34d3754d-298c-4786-92f6-a487db249fc7" configVersion="ce98f20e57ce4e43a5b06accaeee58d700000000"/>
 		<Metadata name="Role.Роль1" id="ecad0539-4f9f-491b-b0f2-f8f42d9a7c41" configVersion="c47a8e3cba84654abb370de01b08d6d000000000"/>
 		<Metadata name="Role.Роль1.Rights" id="ecad0539-4f9f-491b-b0f2-f8f42d9a7c41.0" configVersion="7fae3010268fd146ad417402146bb91400000000"/>
