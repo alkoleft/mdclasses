@@ -136,6 +136,7 @@
 			<CommonModule>ОбщийМодульПовтИспСеанс</CommonModule>
 			<CommonModule>ОбщийМодульПолныйеПрава</CommonModule>
 			<CommonAttribute>ОбщийРеквизит1</CommonAttribute>
+			<CommonAttribute>Автоиспользование</CommonAttribute>
 			<ExchangePlan>ПланОбмена1</ExchangePlan>
 			<XDTOPackage>ПакетXDTO1</XDTOPackage>
 			<WebService>WebСервис1</WebService>

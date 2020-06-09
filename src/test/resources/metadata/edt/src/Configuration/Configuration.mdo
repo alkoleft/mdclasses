@@ -84,6 +84,7 @@
   <commonModules>CommonModule.ОбщийМодульПовтИспСеанс</commonModules>
   <commonModules>CommonModule.ОбщийМодульПолныйеПрава</commonModules>
   <commonAttributes>CommonAttribute.ОбщийРеквизит1</commonAttributes>
+  <commonAttributes>CommonAttribute.Автоиспользование</commonAttributes>
   <exchangePlans>ExchangePlan.ПланОбмена1</exchangePlans>
   <xDTOPackages>XDTOPackage.ПакетXDTO1</xDTOPackages>
   <webServices>WebService.WebСервис1</webServices>

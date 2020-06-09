@@ -184,7 +184,7 @@ class MDOConfigurationTest extends AbstractMDOTest {
     assertThat(configuration.getObjectBelonging()).isEqualTo(ObjectBelonging.OWN);
     assertThat(configuration.getNamePrefix()).isEmpty();
 
-    assertThat(configuration.getChildren()).hasSize(52)
+    assertThat(configuration.getChildren()).hasSize(53)
       .allMatch(Either::isRight);
     checkChildCount(configuration, MDOType.ACCOUNTING_REGISTER, 1);
     checkChildCount(configuration, MDOType.ACCUMULATION_REGISTER, 1);
@@ -195,7 +195,7 @@ class MDOConfigurationTest extends AbstractMDOTest {
     checkChildCount(configuration, MDOType.CHART_OF_CALCULATION_TYPES, 1);
     checkChildCount(configuration, MDOType.CHART_OF_CHARACTERISTIC_TYPES, 1);
     checkChildCount(configuration, MDOType.COMMAND_GROUP, 1);
-    checkChildCount(configuration, MDOType.COMMON_ATTRIBUTE, 1);
+    checkChildCount(configuration, MDOType.COMMON_ATTRIBUTE, 2);
     checkChildCount(configuration, MDOType.COMMON_COMMAND, 1);
     checkChildCount(configuration, MDOType.COMMON_FORM, 1);
     checkChildCount(configuration, MDOType.COMMON_MODULE, 6);
