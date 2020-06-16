@@ -22,7 +22,12 @@
 package com.github._1c_syntax.mdclasses.mdo;
 
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
+import com.github._1c_syntax.mdclasses.metadata.additional.UseMode;
+import io.vavr.control.Either;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 class CommonAttributeTest extends AbstractMDOTest {
   CommonAttributeTest() {
@@ -33,20 +38,72 @@ class CommonAttributeTest extends AbstractMDOTest {
   @Test
   void testEDT() {
     var mdo = getMDObjectEDT("CommonAttributes/ОбщийРеквизит1/ОбщийРеквизит1.mdo");
-    checkBaseField(mdo, CommonAttribute.class, "ОбщийРеквизит1",
-      "d4f0c0ac-ed26-4085-a1b4-e52314b973ad");
-    checkNoChildren(mdo);
-    checkNoModules(mdo);
+    checkAttribute(mdo);
+
+    mdo = getMDObjectEDT("CommonAttributes/Автоиспользование/Автоиспользование.mdo");
+    checkAutoUsedAttribute(mdo);
   }
 
   @Override
   @Test
   void testDesigner() {
     var mdo = getMDObjectDesigner("CommonAttributes/ОбщийРеквизит1.xml");
+    checkAttribute(mdo);
+
+    mdo = getMDObjectDesigner("CommonAttributes/Автоиспользование.xml");
+    checkAutoUsedAttribute(mdo);
+  }
+
+  void checkAttribute(MDObjectBase mdo) {
     checkBaseField(mdo, CommonAttribute.class, "ОбщийРеквизит1",
       "d4f0c0ac-ed26-4085-a1b4-e52314b973ad");
     checkNoChildren(mdo);
     checkNoModules(mdo);
+
+    CommonAttribute attribute = (CommonAttribute) mdo;
+
+    assertThat(attribute).as("Check 'ОбщийРеквизит1'")
+      .extracting("AutoUse")
+      .contains(UseMode.DONT_USE);
+
+    assertThat(attribute.getContent()).as("Check content of 'ОбщийРеквизит1'")
+      .hasSize(8)
+      .extracting(CommonAttributeContent::getUse)
+      .as("Check content useMode of 'ОбщийРеквизит1'")
+      .contains(UseMode.USE, UseMode.DONT_USE)
+      .filteredOn(useMode -> useMode.equals(UseMode.USE))
+      .hasSize(7);
+
+    assertThat(attribute.getContent()).as("Check content metadata of 'ОбщийРеквизит1'")
+      .extracting(CommonAttributeContent::getMetadata)
+      .extracting(Either::getLeft)
+      .contains("ExchangePlan.ПланОбмена1"
+        , "ChartOfAccounts.ПланСчетов1"
+        , "AccumulationRegister.РегистрНакопления1"
+        , "CalculationRegister.РегистрРасчета1"
+        , "Task.Задача1"
+        , "Document.Документ1"
+        , "Catalog.Справочник1"
+        , "ChartOfCharacteristicTypes.ПланВидовХарактеристик1"
+      );
+  }
+
+  void checkAutoUsedAttribute(MDObjectBase mdo) {
+    checkBaseField(mdo, CommonAttribute.class, "Автоиспользование",
+      "0d367c16-880a-4ecf-bb9a-b98438fead9a");
+    checkNoChildren(mdo);
+    checkNoModules(mdo);
+
+    CommonAttribute attribute = (CommonAttribute) mdo;
+
+    assertThat(attribute).as("Check 'Автоиспользование'")
+      .extracting("AutoUse")
+      .contains(UseMode.USE);
+
+    assertThat(attribute.getContent()).as("Check content of 'Автоиспользование'")
+      .hasSize(1)
+      .extracting(CommonAttributeContent::getMetadata, CommonAttributeContent::getUse)
+      .contains(tuple(Either.left("ChartOfCharacteristicTypes.ПланВидовХарактеристик1"), UseMode.DONT_USE));
   }
 
 }

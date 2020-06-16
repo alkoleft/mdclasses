@@ -21,6 +21,10 @@
  */
 package com.github._1c_syntax.mdclasses.mdo.wrapper;
 
+import com.github._1c_syntax.mdclasses.metadata.additional.UseMode;
+import com.github._1c_syntax.mdclasses.unmarshal.ContentConverter;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +37,19 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+
 public class DesignerXRItems {
   @XStreamImplicit(itemFieldName = "xr:Item")
-  private List<String> items = Collections.emptyList();
+  private List<DesignerXRItem> items = Collections.emptyList();
+
+  @Data
+  @XStreamConverter(value = ContentConverter.class)
+  public static class DesignerXRItem {
+    private String value;
+    @XStreamAlias("xr:Metadata")
+    private String metadata;
+    @XStreamAlias("xr:Use")
+    private UseMode use;
+
+  }
 }

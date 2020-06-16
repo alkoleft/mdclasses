@@ -23,19 +23,38 @@ package com.github._1c_syntax.mdclasses.mdo;
 
 import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerMDO;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
+import com.github._1c_syntax.mdclasses.metadata.additional.UseMode;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.Value;
 
-@Value
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class CommonAttribute extends MDObjectBase {
 
+  @XStreamImplicit(itemFieldName = "content")
+  private List<CommonAttributeContent> content = Collections.emptyList();
+
+  private UseMode autoUse = UseMode.USE;
+
   public CommonAttribute(DesignerMDO designerMDO) {
     super(designerMDO);
+
+    autoUse = designerMDO.getProperties().getAutoUse();
+
+    content = new ArrayList<>(designerMDO.getProperties().getContent().getItems().size());
+
+    designerMDO.getProperties().getContent().getItems().forEach(
+      designerXRItem -> content.add(new CommonAttributeContent(designerXRItem))
+    );
   }
 
   @Override

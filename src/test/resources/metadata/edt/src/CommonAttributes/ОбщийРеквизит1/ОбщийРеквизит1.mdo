@@ -40,6 +40,10 @@
     <metadata>AccumulationRegister.РегистрНакопления1</metadata>
     <use>Use</use>
   </content>
+  <content>
+    <metadata>ChartOfCharacteristicTypes.ПланВидовХарактеристик1</metadata>
+    <use>DontUse</use>
+  </content>
   <autoUse>DontUse</autoUse>
   <dataSeparation>DontUse</dataSeparation>
   <usersSeparation>DontUse</usersSeparation>

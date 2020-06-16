@@ -99,5 +99,7 @@ public class DesignerProperties {
 
   @XStreamAlias("IncludeInCommandInterface")
   private boolean includeInCommandInterface;
+  @XStreamAlias("AutoUse")
+  private UseMode autoUse;
 
 }

@@ -55,11 +55,6 @@
 					<xr:ConditionalSeparation/>
 				</xr:Item>
 				<xr:Item>
-					<xr:Metadata>ExternalDataSource.ВнешнийИсточникДанных1</xr:Metadata>
-					<xr:Use>Use</xr:Use>
-					<xr:ConditionalSeparation/>
-				</xr:Item>
-				<xr:Item>
 					<xr:Metadata>Task.Задача1</xr:Metadata>
 					<xr:Use>Use</xr:Use>
 					<xr:ConditionalSeparation/>
@@ -72,6 +67,11 @@
 				<xr:Item>
 					<xr:Metadata>Catalog.Справочник1</xr:Metadata>
 					<xr:Use>Use</xr:Use>
+					<xr:ConditionalSeparation/>
+				</xr:Item>
+				<xr:Item>
+					<xr:Metadata>ChartOfCharacteristicTypes.ПланВидовХарактеристик1</xr:Metadata>
+					<xr:Use>DontUse</xr:Use>
 					<xr:ConditionalSeparation/>
 				</xr:Item>
 			</Content>

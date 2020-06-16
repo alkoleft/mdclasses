@@ -38,7 +38,13 @@
 			<ChoiceForm/>
 			<LinkByType/>
 			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
-			<Content/>
+			<Content>
+				<xr:Item>
+					<xr:Metadata>ChartOfCharacteristicTypes.ПланВидовХарактеристик1</xr:Metadata>
+					<xr:Use>DontUse</xr:Use>
+					<xr:ConditionalSeparation/>
+				</xr:Item>
+			</Content>
 			<AutoUse>Use</AutoUse>
 			<DataSeparation>DontUse</DataSeparation>
 			<SeparatedDataUse>Independently</SeparatedDataUse>

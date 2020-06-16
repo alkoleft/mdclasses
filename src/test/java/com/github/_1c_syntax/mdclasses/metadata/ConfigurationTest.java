@@ -68,7 +68,7 @@ class ConfigurationTest {
     assertThat(configuration.getCommonModules()).hasSize(6);
     assertThat(configuration.getLanguages()).hasSize(3);
 
-    assertThat(configuration.getChildren()).hasSize(96);
+    assertThat(configuration.getChildren()).hasSize(97);
     checkChildCount(configuration, MDOType.CONFIGURATION, 1);
     checkChildCount(configuration, MDOType.COMMAND, 3);
     checkChildCount(configuration, MDOType.FORM, 7);
@@ -87,7 +87,7 @@ class ConfigurationTest {
     checkChildCount(configuration, MDOType.CHART_OF_CALCULATION_TYPES, 1);
     checkChildCount(configuration, MDOType.CHART_OF_CHARACTERISTIC_TYPES, 1);
     checkChildCount(configuration, MDOType.COMMAND_GROUP, 1);
-    checkChildCount(configuration, MDOType.COMMON_ATTRIBUTE, 1);
+    checkChildCount(configuration, MDOType.COMMON_ATTRIBUTE, 2);
     checkChildCount(configuration, MDOType.COMMON_COMMAND, 1);
     checkChildCount(configuration, MDOType.COMMON_FORM, 1);
     checkChildCount(configuration, MDOType.COMMON_MODULE, 6);
@@ -122,7 +122,7 @@ class ConfigurationTest {
     checkChildCount(configuration, MDOType.WS_REFERENCE, 1);
     checkChildCount(configuration, MDOType.XDTO_PACKAGE, 1);
 
-    assertThat(configuration.getChildrenByMdoRef()).hasSize(96);
+    assertThat(configuration.getChildrenByMdoRef()).hasSize(97);
 
     assertThat(configuration.getCommonModule("ГлобальныйОбщийМодуль")).isPresent();
     assertThat(configuration.getCommonModule("НесуществующийМодуль")).isNotPresent();
