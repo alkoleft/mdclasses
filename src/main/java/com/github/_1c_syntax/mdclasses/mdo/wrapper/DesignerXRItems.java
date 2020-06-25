@@ -37,19 +37,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-
 public class DesignerXRItems {
   @XStreamImplicit(itemFieldName = "xr:Item")
   private List<DesignerXRItem> items = Collections.emptyList();
-
-  @Data
-  @XStreamConverter(value = ContentConverter.class)
-  public static class DesignerXRItem {
-    private String value;
-    @XStreamAlias("xr:Metadata")
-    private String metadata;
-    @XStreamAlias("xr:Use")
-    private UseMode use;
-
-  }
 }

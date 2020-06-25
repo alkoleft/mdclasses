@@ -22,11 +22,15 @@
 package com.github._1c_syntax.mdclasses.mdo;
 
 import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerMDO;
+import com.github._1c_syntax.mdclasses.metadata.additional.AttributeKind;
 import com.github._1c_syntax.mdclasses.metadata.additional.AttributeType;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -37,8 +41,14 @@ import lombok.ToString;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class MDOAttribute extends MDObjectBase implements MDOAttributeExtensions {
+
+  @Setter(AccessLevel.NONE)
+  private AttributeKind kind;
+
   public MDOAttribute(DesignerMDO designerMDO) {
     super(designerMDO);
+
+    kind = AttributeKind.SELF;
   }
 
   @Override

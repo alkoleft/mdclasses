@@ -36,6 +36,7 @@ import lombok.ToString;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -134,4 +135,11 @@ public class MDOConfiguration extends MDObjectBSL {
     return MDOType.CONFIGURATION;
   }
 
+  public <T> Stream<T> getChildren(Class<T> clazz) {
+    return getChildren().stream()
+      .filter(Either::isRight)
+      .map(Either::get)
+      .filter(clazz::isInstance)
+      .map(clazz::cast);
+  }
 }

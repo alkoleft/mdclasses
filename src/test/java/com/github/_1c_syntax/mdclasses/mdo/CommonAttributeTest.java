@@ -21,10 +21,16 @@
  */
 package com.github._1c_syntax.mdclasses.mdo;
 
+import com.github._1c_syntax.mdclasses.metadata.Configuration;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.UseMode;
 import io.vavr.control.Either;
+import org.assertj.core.util.Streams;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -54,6 +60,25 @@ class CommonAttributeTest extends AbstractMDOTest {
     checkAutoUsedAttribute(mdo);
   }
 
+  @Test
+  void testDesignerFull() {
+
+    File srcPath = getMDOPathDesigner("").toFile();
+    Configuration configuration = Configuration.create(srcPath.toPath());
+
+    assertThat(configuration.getChildren().stream()
+      .filter(CommonAttribute.class::isInstance)
+      .map(CommonAttribute.class::cast)
+      .map(CommonAttribute::getContent)
+      .map(Streams::stream)
+      .reduce(Stream::concat)
+      .orElse(Stream.empty())
+      .map(CommonAttributeContent::getMetadata)
+      .filter(Either::isRight)
+    ).hasSize(9);
+
+  }
+
   void checkAttribute(MDObjectBase mdo) {
     checkBaseField(mdo, CommonAttribute.class, "ОбщийРеквизит1",
       "d4f0c0ac-ed26-4085-a1b4-e52314b973ad");
@@ -67,25 +92,17 @@ class CommonAttributeTest extends AbstractMDOTest {
       .contains(UseMode.DONT_USE);
 
     assertThat(attribute.getContent()).as("Check content of 'ОбщийРеквизит1'")
-      .hasSize(8)
+      .hasSize(commonAttribute1Content().size())
       .extracting(CommonAttributeContent::getUse)
       .as("Check content useMode of 'ОбщийРеквизит1'")
       .contains(UseMode.USE, UseMode.DONT_USE)
       .filteredOn(useMode -> useMode.equals(UseMode.USE))
-      .hasSize(7);
+      .hasSize(commonAttribute1Content().size() - 1);
 
     assertThat(attribute.getContent()).as("Check content metadata of 'ОбщийРеквизит1'")
       .extracting(CommonAttributeContent::getMetadata)
       .extracting(Either::getLeft)
-      .contains("ExchangePlan.ПланОбмена1"
-        , "ChartOfAccounts.ПланСчетов1"
-        , "AccumulationRegister.РегистрНакопления1"
-        , "CalculationRegister.РегистрРасчета1"
-        , "Task.Задача1"
-        , "Document.Документ1"
-        , "Catalog.Справочник1"
-        , "ChartOfCharacteristicTypes.ПланВидовХарактеристик1"
-      );
+      .containsSequence(commonAttribute1Content());
   }
 
   void checkAutoUsedAttribute(MDObjectBase mdo) {
@@ -104,6 +121,17 @@ class CommonAttributeTest extends AbstractMDOTest {
       .hasSize(1)
       .extracting(CommonAttributeContent::getMetadata, CommonAttributeContent::getUse)
       .contains(tuple(Either.left("ChartOfCharacteristicTypes.ПланВидовХарактеристик1"), UseMode.DONT_USE));
+  }
+
+  private static List<String> commonAttribute1Content() {
+    return List.of("ExchangePlan.ПланОбмена1"
+      , "Catalog.Справочник1"
+      , "Document.Документ1"
+      , "ChartOfAccounts.ПланСчетов1"
+      , "CalculationRegister.РегистрРасчета1"
+      , "Task.Задача1"
+      , "AccumulationRegister.РегистрНакопления1"
+      , "ChartOfCharacteristicTypes.ПланВидовХарактеристик1");
   }
 
 }

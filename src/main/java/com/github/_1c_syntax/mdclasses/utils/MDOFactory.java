@@ -22,6 +22,7 @@
 package com.github._1c_syntax.mdclasses.utils;
 
 import com.github._1c_syntax.mdclasses.mdo.Command;
+import com.github._1c_syntax.mdclasses.mdo.CommonAttribute;
 import com.github._1c_syntax.mdclasses.mdo.Form;
 import com.github._1c_syntax.mdclasses.mdo.HTTPService;
 import com.github._1c_syntax.mdclasses.mdo.HTTPServiceURLTemplate;
@@ -122,6 +123,7 @@ public class MDOFactory {
             computeAllMDObject((MDOConfiguration) mdoValue, configurationSource, rootPath);
             setDefaultConfigurationLanguage((MDOConfiguration) mdoValue);
             setIncludedSubsystems((MDOConfiguration) mdoValue);
+            resolveChildren((MDOConfiguration) mdoValue);
           });
       }
     });
@@ -329,9 +331,7 @@ public class MDOFactory {
   }
 
   private void setIncludedSubsystems(MDOConfiguration configuration) {
-    Map<String, MDObjectBase> children = configuration.getChildren().stream().filter(Either::isRight)
-      .map(Either::get).collect(Collectors.toMap((MDObjectBase mdo)
-        -> mdo.getMdoReference().getMdoRef(), (MDObjectBase mdo) -> mdo));
+    Map<String, MDObjectBase> children = childrenByName(configuration);
 
     configuration.getChildren().stream().filter(Either::isRight).map(Either::get)
       .filter((MDObjectBase mdo) -> mdo.getType() == MDOType.SUBSYSTEM)
@@ -366,4 +366,27 @@ public class MDOFactory {
       setSubsystemForChildren((Subsystem) mdo, allChildren);
     }
   }
+
+  private static void resolveChildren(MDOConfiguration configuration) {
+    Map<String, MDObjectBase> children = childrenByName(configuration);
+
+    configuration.getChildren(CommonAttribute.class)
+      .forEach(commonAttribute -> {
+        commonAttribute.getContent()
+          .forEach(commonAttributeContent -> {
+            if (commonAttributeContent.getMetadata().isLeft() && children.containsKey(commonAttributeContent.getMetadata().getLeft())) {
+              commonAttributeContent.setMetadata(Either.right(children.get(commonAttributeContent.getMetadata().getLeft())));
+            }
+          });
+      });
+  }
+
+  private static Map<String, MDObjectBase> childrenByName(MDOConfiguration configuration) {
+    return configuration.getChildren().stream().filter(Either::isRight)
+      .map(Either::get).collect(Collectors.toMap(
+        (MDObjectBase mdo) -> mdo.getMdoReference().getMdoRef(),
+        (MDObjectBase mdo) -> mdo)
+      );
+  }
+
 }

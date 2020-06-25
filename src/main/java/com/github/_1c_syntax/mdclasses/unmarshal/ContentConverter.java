@@ -1,5 +1,6 @@
 package com.github._1c_syntax.mdclasses.unmarshal;
 
+import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerXRItem;
 import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerXRItems;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.converters.reflection.ReflectionConverter;
@@ -22,7 +23,7 @@ public class ContentConverter extends ReflectionConverter {
     if (reader.hasMoreChildren()) {
       return super.unmarshal(reader, context);
     } else {
-      DesignerXRItems.DesignerXRItem item = new DesignerXRItems.DesignerXRItem();
+      DesignerXRItem item = new DesignerXRItem();
       item.setValue(reader.getValue());
       return item;
     }
