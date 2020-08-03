@@ -132,7 +132,7 @@ class CommonAttributeTest extends AbstractMDOTest {
     assertThat(attribute.getContent()).as("Check content metadata of 'ОбщийРеквизит1'")
       .extracting(CommonAttributeContent::getMetadata)
       .extracting(Either::getLeft)
-      .containsSequence(commonAttribute1Content());
+      .containsAll(commonAttribute1Content());
   }
 
   void checkAutoUsedAttribute(MDObjectBase mdo) {

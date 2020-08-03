@@ -134,12 +134,4 @@ public class MDOConfiguration extends MDObjectBSL {
   public MDOType getType() {
     return MDOType.CONFIGURATION;
   }
-
-  public <T> Stream<T> getChildren(Class<T> clazz) {
-    return getChildren().stream()
-      .filter(Either::isRight)
-      .map(Either::get)
-      .filter(clazz::isInstance)
-      .map(clazz::cast);
-  }
 }

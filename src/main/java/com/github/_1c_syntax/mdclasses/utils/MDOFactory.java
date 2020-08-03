@@ -22,7 +22,6 @@
 package com.github._1c_syntax.mdclasses.utils;
 
 import com.github._1c_syntax.mdclasses.mdo.Command;
-import com.github._1c_syntax.mdclasses.mdo.CommonAttribute;
 import com.github._1c_syntax.mdclasses.mdo.Form;
 import com.github._1c_syntax.mdclasses.mdo.HTTPService;
 import com.github._1c_syntax.mdclasses.mdo.HTTPServiceURLTemplate;
@@ -188,8 +187,8 @@ public class MDOFactory {
   }
 
   private Either<String, MDObjectBase> readChildMDO(ConfigurationSource configurationSource,
-                                                           Path rootPath,
-                                                           Either<String, MDObjectBase> child) {
+                                                    Path rootPath,
+                                                    Either<String, MDObjectBase> child) {
     if (!child.isRight()) {
       var value = child.getLeft();
       var dotPosition = value.indexOf('.');

@@ -43,12 +43,10 @@ import lombok.ToString;
 public class MDOAttribute extends MDObjectBase implements MDOAttributeExtensions {
 
   @Setter(AccessLevel.NONE)
-  protected AttributeKind kind;
+  protected AttributeKind kind = AttributeKind.SELF;
 
   public MDOAttribute(DesignerMDO designerMDO) {
     super(designerMDO);
-
-    kind = AttributeKind.SELF;
   }
 
   @Override
