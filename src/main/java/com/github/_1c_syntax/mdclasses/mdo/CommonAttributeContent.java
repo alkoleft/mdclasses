@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommonAttributeContent {
 
-  private Either<String, MDObjectBase> metadata;
+  private Either<String, MDObjectComplex> metadata;
   private UseMode use;
 
   public CommonAttributeContent(DesignerXRItem designerMDO) {

@@ -123,7 +123,6 @@ public class MDOFactory {
             computeAllMDObject((MDOConfiguration) mdoValue, configurationSource, rootPath);
             setDefaultConfigurationLanguage((MDOConfiguration) mdoValue);
             setIncludedSubsystems((MDOConfiguration) mdoValue);
-            resolveChildren((MDOConfiguration) mdoValue);
           });
       }
     });
@@ -365,20 +364,6 @@ public class MDOFactory {
     if (mdo instanceof Subsystem) {
       setSubsystemForChildren((Subsystem) mdo, allChildren);
     }
-  }
-
-  private static void resolveChildren(MDOConfiguration configuration) {
-    Map<String, MDObjectBase> children = childrenByName(configuration);
-
-    configuration.getChildren(CommonAttribute.class)
-      .forEach(commonAttribute -> {
-        commonAttribute.getContent()
-          .forEach(commonAttributeContent -> {
-            if (commonAttributeContent.getMetadata().isLeft() && children.containsKey(commonAttributeContent.getMetadata().getLeft())) {
-              commonAttributeContent.setMetadata(Either.right(children.get(commonAttributeContent.getMetadata().getLeft())));
-            }
-          });
-      });
   }
 
   private static Map<String, MDObjectBase> childrenByName(MDOConfiguration configuration) {

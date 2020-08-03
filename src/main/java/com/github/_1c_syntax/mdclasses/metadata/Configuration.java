@@ -21,6 +21,8 @@
  */
 package com.github._1c_syntax.mdclasses.metadata;
 
+import com.github._1c_syntax.mdclasses.mdo.Attribute;
+import com.github._1c_syntax.mdclasses.mdo.CommonAttribute;
 import com.github._1c_syntax.mdclasses.mdo.CommonModule;
 import com.github._1c_syntax.mdclasses.mdo.HTTPService;
 import com.github._1c_syntax.mdclasses.mdo.HTTPServiceURLTemplate;
@@ -52,12 +54,15 @@ import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
 import java.net.URI;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Корневой класс конфигурации 1с
@@ -232,6 +237,9 @@ public class Configuration {
     Map<URI, MDObjectBase> modulesObject = new HashMap<>();
     final Map<String, Map<SupportConfiguration, SupportVariant>> supportMap = getSupportMap();
 
+    Map<String, MDObjectBase> childrenByName = new LinkedHashMap<>();
+    getChildrenByMdoRef().forEach((ref, obj) -> childrenByName.put(ref.getMdoRef(), obj));
+
     children.forEach((MDObjectBase mdo) -> {
       var supports = supportMap.getOrDefault(mdo.getUuid(), Collections.emptyMap());
 
@@ -239,6 +247,8 @@ public class Configuration {
 
       if (mdo instanceof MDObjectBSL) {
         computeModules(modulesType, modulesSupport, modulesObject, (MDObjectBSL) mdo, supports);
+      } else if (mdo instanceof CommonAttribute) {
+        computeCommonAttribute((CommonAttribute) mdo, childrenByName);
       }
     });
 
@@ -369,5 +379,53 @@ public class Configuration {
       }
     });
   }
+
+  private void computeCommonAttribute(CommonAttribute commonAttribute, Map<String, MDObjectBase> itemsByName) {
+
+    // Найдем по имени описание
+    commonAttribute.getContent()
+      .forEach(content -> {
+        MDObjectComplex item;
+        if (content.getMetadata().isLeft()
+          && (item = (MDObjectComplex) itemsByName.getOrDefault(content.getMetadata().getLeft(), null)) != null) {
+          content.setMetadata(Either.right(item));
+        }
+      });
+
+    // Сформируем список объектов, в которые включен атрибут
+    if (commonAttribute.getAutoUse() == UseMode.DONT_USE) {
+      // Соберем все сложные объекты, которые используются
+      commonAttribute.setObjects(
+        commonAttribute.getContent().stream()
+          .filter(content -> content.getUse() == UseMode.USE)
+          .filter(content -> content.getMetadata().isRight())
+          .map(content -> content.getMetadata().get())
+          .collect(Collectors.toList())
+      );
+    } else {
+
+      // Соберем все сложные объекты, которые не используются
+      var dontUse = commonAttribute.getContent().stream()
+        .filter(content -> content.getUse() == UseMode.DONT_USE)
+        .filter(content -> content.getMetadata().isRight())
+        .map(content -> content.getMetadata().get())
+        .collect(Collectors.toSet());
+
+      // И вычтем их из всей кучи
+      commonAttribute.setObjects(itemsByName.values().stream()
+        .filter(MDObjectComplex.class::isInstance)
+        .filter(mdObjectBase -> !dontUse.contains(mdObjectBase))
+        .map(MDObjectComplex.class::cast)
+        .collect(Collectors.toList()));
+    }
+
+    commonAttribute.getObjects().forEach(mdObjectComplex -> {
+        var attr = new ArrayList<>(mdObjectComplex.getAttributes());
+        attr.add(new Attribute(commonAttribute));
+        mdObjectComplex.setAttributes(attr);
+      }
+    );
+  }
+
 
 }

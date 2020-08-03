@@ -22,6 +22,7 @@
 package com.github._1c_syntax.mdclasses.mdo;
 
 import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerMDO;
+import com.github._1c_syntax.mdclasses.metadata.additional.AttributeKind;
 import com.github._1c_syntax.mdclasses.metadata.additional.AttributeType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,4 +43,11 @@ public class Attribute extends MDOAttribute {
     return AttributeType.ATTRIBUTE;
   }
 
+  public Attribute(CommonAttribute commonAttribute) {
+
+    this.name = commonAttribute.name;
+    this.comment = commonAttribute.comment;
+
+    kind = AttributeKind.COMMON;
+  }
 }

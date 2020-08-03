@@ -30,6 +30,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +52,14 @@ class CommonAttributeTest extends AbstractMDOTest {
     checkAutoUsedAttribute(mdo);
   }
 
+  @Test
+  void testEDTFull() {
+    File srcPath = new File("src/test/resources/metadata/edt");
+    Configuration configuration = Configuration.create(srcPath.toPath());
+
+    checkConfiguration(configuration);
+  }
+
   @Override
   @Test
   void testDesigner() {
@@ -60,23 +70,43 @@ class CommonAttributeTest extends AbstractMDOTest {
     checkAutoUsedAttribute(mdo);
   }
 
+  void checkConfiguration(Configuration configuration){
+    assertThat(
+      configuration.getChildren().stream()
+        .filter(CommonAttribute.class::isInstance)
+        .map(CommonAttribute.class::cast)
+        .flatMap(c -> c.getContent().stream())
+        .map(CommonAttributeContent::getMetadata)
+        .filter(Either::isRight)
+    ).hasSize(9);
+
+    Set<String> objectNames = Set.copyOf(commonAttribute1Content());
+
+    var objects = configuration.getChildren().stream()
+      .filter(mdo -> objectNames.contains(mdo.getMdoReference().getMdoRef()))
+      .map(MDObjectComplex.class::cast)
+      .collect(Collectors.toList());
+
+    assertThat(objects).hasSize(objectNames.size());
+    assertThat(objects.stream()
+      .flatMap(mdObjectComplex -> mdObjectComplex.getAttributes().stream())
+      .filter(mdoAttribute -> mdoAttribute.getName().equals("ОбщийРеквизит1"))
+    ).hasSize(objectNames.size() - 1);
+
+  }
   @Test
   void testDesignerFull() {
 
     File srcPath = getMDOPathDesigner("").toFile();
     Configuration configuration = Configuration.create(srcPath.toPath());
 
-    assertThat(configuration.getChildren().stream()
-      .filter(CommonAttribute.class::isInstance)
-      .map(CommonAttribute.class::cast)
-      .map(CommonAttribute::getContent)
-      .map(Streams::stream)
-      .reduce(Stream::concat)
-      .orElse(Stream.empty())
-      .map(CommonAttributeContent::getMetadata)
-      .filter(Either::isRight)
-    ).hasSize(9);
+    checkConfiguration(configuration);
+  }
 
+  <T> Stream<T> childrenOfClass(Configuration configuration, Class<T> clazz){
+    return configuration.getChildren().stream()
+      .filter(clazz::isInstance)
+      .map(clazz::cast);
   }
 
   void checkAttribute(MDObjectBase mdo) {

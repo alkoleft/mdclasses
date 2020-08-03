@@ -43,6 +43,8 @@ public class CommonAttribute extends MDObjectBase {
   @XStreamImplicit(itemFieldName = "content")
   private List<CommonAttributeContent> content = Collections.emptyList();
 
+  private List<MDObjectComplex> objects = Collections.emptyList();
+
   private UseMode autoUse = UseMode.USE;
 
   public CommonAttribute(DesignerMDO designerMDO) {
