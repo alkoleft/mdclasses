@@ -40,4 +40,6 @@ import java.util.List;
 public class DesignerXRItems {
   @XStreamImplicit(itemFieldName = "xr:Item")
   private List<DesignerXRItem> items = Collections.emptyList();
+  @XStreamImplicit(itemFieldName = "xr:Object")
+  private List<String> itemsObject = Collections.emptyList();
 }
