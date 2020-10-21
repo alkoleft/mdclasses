@@ -24,7 +24,7 @@ package com.github._1c_syntax.mdclasses.metadata.additional;
 /**
  * Возможные виды расширений
  */
-public enum ConfigurationExtensionPurpose {
+public enum ConfigurationExtensionPurpose implements EnumWithValue {
   CUSTOMIZATION("Customization"),
   ADD_ON("AddOn"),
   PATCH("Patch"),
@@ -35,15 +35,6 @@ public enum ConfigurationExtensionPurpose {
 
   ConfigurationExtensionPurpose(String value) {
     this.value = value;
-  }
-
-  public static ConfigurationExtensionPurpose fromValue(String value) {
-    for (ConfigurationExtensionPurpose configurationExtensionPurpose : ConfigurationExtensionPurpose.values()) {
-      if (configurationExtensionPurpose.value.equals(value)) {
-        return configurationExtensionPurpose;
-      }
-    }
-    throw new IllegalArgumentException(value);
   }
 
   public String value() {

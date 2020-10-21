@@ -26,7 +26,7 @@ import java.util.Locale;
 /**
  * Возможные варианты языков, на которых разрабатывается код
  */
-public enum ScriptVariant {
+public enum ScriptVariant implements EnumWithValue{
   ENGLISH("English"),
   RUSSIAN("Russian");
 
@@ -34,10 +34,6 @@ public enum ScriptVariant {
 
   ScriptVariant(String value) {
     this.value = value;
-  }
-
-  public static ScriptVariant fromValue(String value) {
-    return valueOf(value.toUpperCase(Locale.ENGLISH));
   }
 
   public String value() {

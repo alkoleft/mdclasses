@@ -26,6 +26,8 @@ import com.github._1c_syntax.mdclasses.mdo.wrapper.DesignerSynonym;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOReference;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.ObjectBelonging;
+import com.github._1c_syntax.mdclasses.unmarshal.Group;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
@@ -55,17 +57,22 @@ public class MDObjectBase implements MDOExtensions {
   /**
    * Имя объекта
    */
+  @Group("Properties")
+  @XStreamAlias("Name")
   protected String name = "";
 
   /**
    * Синонимы объекта
    */
-  @XStreamImplicit(itemFieldName = "synonym")
+  @Group("Properties")
+  @XStreamImplicit(itemFieldName = "Synonym")
   protected List<MDOSynonym> synonyms = Collections.emptyList();
 
   /**
    * Строка с комментарием объекта
    */
+  @Group("Properties")
+  @XStreamAlias("Comment")
   protected String comment = "";
 
   /**
@@ -81,6 +88,8 @@ public class MDObjectBase implements MDOExtensions {
   /**
    * Принадлежность объекта конфигурации (собственный или заимствованный)
    */
+  @Group("Properties")
+  @XStreamAlias("ObjectBelonging")
   protected ObjectBelonging objectBelonging = ObjectBelonging.OWN;
 
   /**

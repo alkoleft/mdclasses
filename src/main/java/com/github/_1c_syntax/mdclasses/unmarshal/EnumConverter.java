@@ -21,6 +21,7 @@
  */
 package com.github._1c_syntax.mdclasses.unmarshal;
 
+import com.github._1c_syntax.mdclasses.metadata.additional.EnumWithValue;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -37,27 +38,34 @@ import lombok.SneakyThrows;
  * Внимание!
  * В перечислении должен быть реализован метод "fromValue" со стоковым параметром, возвращающий элемент перечисления
  */
-public class EnumConverter implements Converter {
-
-  private final Class<?> mdoEnum;
-
-  public EnumConverter(Class<?> mdoEnum) {
-    this.mdoEnum = mdoEnum;
+public class EnumConverter <T extends Enum<T> & EnumWithValue>implements Converter {
+  private Class<T> enumClazz;
+  public EnumConverter(Class<T> mdoEnum) {
+    enumClazz = mdoEnum;
   }
 
   @Override
   public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    // noop
+    context.convertAnother(((T)source).value());
   }
 
-  @SneakyThrows
   @Override
   public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-    return mdoEnum.getMethod("fromValue", String.class).invoke(this, reader.getValue());
+    return fromValue(enumClazz, reader.getValue());
+  }
+
+  public static <T extends Enum<T> & EnumWithValue> T fromValue(Class<T> clazz, String value) {
+
+    for (T item : clazz.getEnumConstants()) {
+      if (item.value().equals(value)) {
+        return item;
+      }
+    }
+    throw new IllegalArgumentException(value);
   }
 
   @Override
   public boolean canConvert(Class type) {
-    return mdoEnum.isAssignableFrom(type);
+    return enumClazz.isAssignableFrom(type);
   }
 }

@@ -123,7 +123,7 @@ public class DesignerWrapper {
   @XStreamAlias("CommonTemplate")
   protected DesignerMDO commonTemplate;
   @XStreamAlias("Configuration")
-  protected DesignerMDO configuration;
+  protected MDOConfiguration configuration;
   @XStreamAlias("Constant")
   protected DesignerMDO constant;
   @XStreamAlias("Cube")
@@ -208,9 +208,13 @@ public class DesignerWrapper {
   public Optional<MDObjectBase> getPropertyByType(MDOType type, Path mdoPath) {
     var value = getPropertyValue(type);
     if (value.isPresent()) {
+      var obj = value.get();
+      if(obj instanceof MDOConfiguration)
+        return Optional.of((MDObjectBase)obj);
+      var designerMDO =(DesignerMDO)obj;
       Class<?> clazz = TYPE_CLASSES.get(type);
       if (clazz != null) {
-        var designerMDO = value.get();
+
         designerMDO.setMdoPath(mdoPath);
         try {
           return Optional.of((MDObjectBase) clazz.getConstructor(DesignerMDO.class)
@@ -226,8 +230,8 @@ public class DesignerWrapper {
     return Optional.empty();
   }
 
-  private Optional<DesignerMDO> getPropertyValue(MDOType type) {
-    Optional<DesignerMDO> result;
+  private Optional<Object> getPropertyValue(MDOType type) {
+    Optional<Object> result;
     switch (type) {
       case CONFIGURATION:
         result = Optional.of(getConfiguration());

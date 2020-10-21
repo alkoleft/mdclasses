@@ -166,6 +166,7 @@ public class XStreamFactory {
         registerConverter(new DateConverter(), PRIORITY_NORMAL);
         registerConverter(new CollectionConverter(getMapper()), PRIORITY_NORMAL);
         registerConverter(reflectionConverter, PRIORITY_VERY_LOW);
+        registerConverter(new DesignerObjectConverter(getMapper(), getReflectionProvider(), MDOConfiguration.class), PRIORITY_VERY_LOW);
       }
     };
     // автоопределение аннотаций
@@ -192,7 +193,7 @@ public class XStreamFactory {
 
     // дочерние элементы
     MDOType.valuesWithoutChildren().forEach((MDOType type) -> {
-      xStream.aliasField(type.getName(), DesignerChildObjects.class, CHILDREN_FIELD_NAME);
+      xStream.aliasField(type.getName(), MDOConfiguration.class, CHILDREN_FIELD_NAME);
 
       if (type.getGroupName().isEmpty()) {
         return;
@@ -364,11 +365,11 @@ public class XStreamFactory {
   }
 
   private void addConverters(XStream xStream) {
-    xStream.registerConverter(new EnumConverter(ReturnValueReuse.class));
-    xStream.registerConverter(new EnumConverter(UseMode.class));
-    xStream.registerConverter(new EnumConverter(ScriptVariant.class));
-    xStream.registerConverter(new EnumConverter(ConfigurationExtensionPurpose.class));
-    xStream.registerConverter(new EnumConverter(ObjectBelonging.class));
+    xStream.registerConverter(new EnumConverter<>(ReturnValueReuse.class));
+    xStream.registerConverter(new EnumConverter<>(UseMode.class));
+    xStream.registerConverter(new EnumConverter<>(ScriptVariant.class));
+    xStream.registerConverter(new EnumConverter<>(ConfigurationExtensionPurpose.class));
+    xStream.registerConverter(new EnumConverter<>(ObjectBelonging.class));
     xStream.registerConverter(new AttributeConverter());
     xStream.registerConverter(new CompatibilityModeConverter());
     xStream.registerConverter(new PairConverter());

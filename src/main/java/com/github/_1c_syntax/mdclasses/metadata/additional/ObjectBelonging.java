@@ -24,7 +24,7 @@ package com.github._1c_syntax.mdclasses.metadata.additional;
 /**
  * Признак принадлежности объекта к конфигурации
  */
-public enum ObjectBelonging {
+public enum ObjectBelonging implements EnumWithValue {
   ADOPTED("Adopted"),
   OWN("Own");
 
@@ -32,15 +32,6 @@ public enum ObjectBelonging {
 
   ObjectBelonging(String value) {
     this.value = value;
-  }
-
-  public static ObjectBelonging fromValue(String value) {
-    for (ObjectBelonging objectBelonging : ObjectBelonging.values()) {
-      if (objectBelonging.value.equals(value)) {
-        return objectBelonging;
-      }
-    }
-    throw new IllegalArgumentException(value);
   }
 
   public String value() {

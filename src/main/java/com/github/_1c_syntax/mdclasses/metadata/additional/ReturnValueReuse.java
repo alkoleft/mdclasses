@@ -24,7 +24,7 @@ package com.github._1c_syntax.mdclasses.metadata.additional;
 /**
  * Возможные варианты повторного использования значений модулей
  */
-public enum ReturnValueReuse {
+public enum ReturnValueReuse implements EnumWithValue {
 
   DONT_USE("DontUse"),
   DURING_REQUEST("DuringRequest"),
@@ -34,15 +34,6 @@ public enum ReturnValueReuse {
 
   ReturnValueReuse(String value) {
     this.value = value;
-  }
-
-  public static ReturnValueReuse fromValue(String value) {
-    for (ReturnValueReuse returnValueReuse : ReturnValueReuse.values()) {
-      if (returnValueReuse.value.equals(value)) {
-        return returnValueReuse;
-      }
-    }
-    throw new IllegalArgumentException(value);
   }
 
   public String value() {
